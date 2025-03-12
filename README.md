@@ -29,15 +29,16 @@ Mapa del territorio de Margaritas
 
     <script>
         // Configurar Firebase
-        const firebaseConfig = {
-            apiKey: "TU_API_KEY",
-            authDomain: "TU_AUTH_DOMAIN",
-            databaseURL: "TU_DATABASE_URL",
-            projectId: "TU_PROJECT_ID",
-            storageBucket: "TU_STORAGE_BUCKET",
-            messagingSenderId: "TU_MESSAGING_SENDER_ID",
-            appId: "TU_APP_ID"
-        };
+       const firebaseConfig = {
+  apiKey: "AIzaSyCpCSFy621DXXmsORl8HffbFvDdaP0Y7XE",
+  authDomain: "mapa-margaritas.firebaseapp.com",
+  databaseURL: "https://mapa-margaritas-default-rtdb.firebaseio.com",
+  projectId: "mapa-margaritas",
+  storageBucket: "mapa-margaritas.firebasestorage.app",
+  messagingSenderId: "474984702533",
+  appId: "1:474984702533:web:7be228872db83b357db92c",
+  measurementId: "G-TVM15DZW7W"
+};
         firebase.initializeApp(firebaseConfig);
         const database = firebase.database();
 
