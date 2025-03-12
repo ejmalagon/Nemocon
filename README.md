@@ -24,7 +24,7 @@ Mapa del territorio de Margaritas
 <body>
     <h2>Mapa Interactivo</h2>
     <div id="mapa-container">
-        <img id="mapa" src="URL_DE_TU_IMAGEN" alt="Mapa Interactivo">
+        <img id="mapa" src="https://drive.google.com/file/d/1sCLRJPlAJ1-fuoABMRI_eJo5YXJmbnfc/view?usp=drive_link" alt="Mapa Interactivo">
     </div>
 
     <script>
