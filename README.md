@@ -55,16 +55,16 @@
     </div>
 
     <script>
-        const firebaseConfig = {
-            apiKey: "AIzaSyAKP4w62Q3lPQYr30zzGf4rs3iF83uJCuc",
-            authDomain: "buses-32e31.firebaseapp.com",
-            databaseURL: "https://buses-32e31-default-rtdb.firebaseio.com/",
-            projectId: "buses-32e31",
-            storageBucket: "buses-32e31.firebasestorage.app",
-            messagingSenderId: "91461232305",
-            appId: "1:914612323057:web:8dde205f394adcb9845f50"
-            measurementId: "G-GT9Z1BVNFQ"
-        };
+    const firebaseConfig = {
+  apiKey: "AIzaSyAKP4w62Q3lPQYr30zzGf4rs3iF83uJCuc",
+  authDomain: "buses-32e31.firebaseapp.com",
+  databaseURL: "https://buses-32e31-default-rtdb.firebaseio.com",
+  projectId: "buses-32e31",
+  storageBucket: "buses-32e31.firebasestorage.app",
+  messagingSenderId: "914612323057",
+  appId: "1:914612323057:web:8dde205f394adcb9845f50",
+  measurementId: "G-GT9Z1BVNFQ"
+};
         
         firebase.initializeApp(firebaseConfig);
         const db = firebase.database();
