@@ -109,4 +109,26 @@
         }
         .reserved {
             background-color: red;
-            c
+            color: white;
+        }
+        .images {
+            margin-top: 20px;
+        }
+        .images img {
+            width: 300px;
+            margin: 10px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Reserva tu asiento para el viaje a Nemocón</h1>
+    <p>Haz clic en un asiento para reservarlo</p>
+    <div id="buses"></div>
+    
+    <div class="images">
+        <h2>Imágenes de Nemocón</h2>
+        <img src="imagen1.jpg" alt="Nemocón 1">
+        <img src="imagen2.jpg" alt="Nemocón 2">
+    </div>
+</body>
+</html>
