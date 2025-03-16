@@ -125,10 +125,6 @@
     <p>Haz clic en un asiento para reservarlo</p>
     <div id="buses"></div>
     
-    <div class="images">
-        <h2>Imágenes de Nemocón</h2>
-        <img src="imagen1.jpg" alt="Nemocón 1">
-        <img src="imagen2.jpg" alt="Nemocón 2">
-    </div>
+
 </body>
 </html>
