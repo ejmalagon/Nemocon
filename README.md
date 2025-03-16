@@ -2,7 +2,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Reserva de Asientos - Viaje a Nemocón</title>
+    <title>Reserva de Asientos - campaña de predicación a Nemocón</title>
     <style>
         body {
             font-family: Arial, sans-serif;
