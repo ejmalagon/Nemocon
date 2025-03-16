@@ -1,15 +1,14 @@
+<!DOCTYPE html>
 <html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Reserva de Asientos - Campaña de predicación</title>
+    <title>Reserva de Asientos - Viaje a Nemocón</title>
     <script type="module">
-        // Importar Firebase versión 9
         import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js";
-        import { getDatabase, ref, onValue, set, remove } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-database.js";
+        import { getDatabase, ref, onValue, set } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-database.js";
 
-        // Configuración de Firebase (reemplaza con tus datos)
-       const firebaseConfig = {
+const firebaseConfig = {
   apiKey: "AIzaSyAKP4w62Q3lPQYr30zzGf4rs3iF83uJCuc",
   authDomain: "buses-32e31.firebaseapp.com",
   databaseURL: "https://buses-32e31-default-rtdb.firebaseio.com",
@@ -20,13 +19,12 @@
   measurementId: "G-GT9Z1BVNFQ"
 };
 
-        // Inicializar Firebase
         const app = initializeApp(firebaseConfig);
         const db = getDatabase(app);
 
-        document.addEventListener("DOMContentLoaded", function() {
+        document.addEventListener("DOMContentLoaded", () => {
             const busesContainer = document.getElementById("buses");
-            const busCount = 2; // Número de buses disponibles
+            const busCount = 2;
             const seatsPerBus = 40;
 
             function createBus(busNumber) {
@@ -35,17 +33,14 @@
                 let title = document.createElement("h3");
                 title.innerText = `Bus ${busNumber}`;
                 busDiv.appendChild(title);
-
+                
                 for (let i = 1; i <= seatsPerBus; i++) {
                     let seat = document.createElement("div");
                     seat.classList.add("seat");
                     seat.innerText = i;
-
-                    // Referencia al asiento en la base de datos
-                    let seatRef = ref(db, `bus${busNumber}/seat${i}`);
-
-                    // Escuchar cambios en tiempo real
-                    onValue(seatRef, (snapshot) => {
+                    
+                    const seatRef = ref(db, `bus${busNumber}/seat${i}`);
+                    onValue(seatRef, snapshot => {
                         let data = snapshot.val();
                         if (data) {
                             seat.innerText = data;
@@ -55,15 +50,9 @@
                             seat.classList.remove("reserved");
                         }
                     });
-
-                    // Evento de reserva/liberación de asiento
+                    
                     seat.onclick = function () {
-                        if (seat.classList.contains("reserved")) {
-                            let confirmDelete = confirm("¿Deseas liberar este asiento?");
-                            if (confirmDelete) {
-                                remove(seatRef);
-                            }
-                        } else {
+                        if (!seat.classList.contains("reserved")) {
                             let name = prompt("Ingresa tu nombre para reservar el asiento");
                             if (name) {
                                 set(seatRef, name);
@@ -74,13 +63,12 @@
                 }
                 busesContainer.appendChild(busDiv);
             }
-
+            
             for (let i = 1; i <= busCount; i++) {
                 createBus(i);
             }
         });
     </script>
-
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -93,16 +81,16 @@
             border: 2px solid black;
         }
         .seat {
-            width: 100px;
-            height: 50px;
+            width: 80px;
+            height: 40px;
             margin: 5px;
             display: inline-block;
             border: 1px solid gray;
             text-align: center;
-            line-height: 50px;
+            line-height: 40px;
             cursor: pointer;
             background-color: lightgray;
-            font-size: 14px;
+            font-size: 12px;
             overflow: hidden;
             white-space: nowrap;
         }
@@ -110,20 +98,11 @@
             background-color: red;
             color: white;
         }
-        .images {
-            margin-top: 20px;
-        }
-        .images img {
-            width: 300px;
-            margin: 10px;
-        }
     </style>
 </head>
 <body>
-    <h1>Reserva tu asiento para el viaje a la campaña de predicación a Nemocón el sábado 3 de mayo. Reuerda que debes llevar tu almuerzo y alimentos que vayas a consumir durante ese día.</h1>
-    <p>Haz clic en un asiento para reservarlo y escribe tu nombre.</p>
+    <h1>Reserva tu asiento para el viaje a Nemocón</h1>
+    <p>Haz clic en un asiento para reservarlo</p>
     <div id="buses"></div>
-    
-
 </body>
 </html>
