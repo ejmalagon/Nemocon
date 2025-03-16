@@ -1,4 +1,3 @@
-<!DOCTYPE html>
 <html lang="es">
 <head>
     <meta charset="UTF-8">
@@ -16,7 +15,7 @@
             border: 2px solid black;
         }
         .seat {
-            width: 40px;
+            width: 80px;
             height: 40px;
             margin: 5px;
             display: inline-block;
@@ -25,6 +24,9 @@
             line-height: 40px;
             cursor: pointer;
             background-color: lightgray;
+            font-size: 12px;
+            overflow: hidden;
+            white-space: nowrap;
         }
         .reserved {
             background-color: red;
@@ -71,7 +73,20 @@
                     if (name) {
                         seat.innerText = name;
                         seat.classList.add("reserved");
-                        seat.onclick = null; // Evita cambios posteriores
+                        seat.onclick = function () {
+                            let confirmDelete = confirm("¿Deseas liberar este asiento?");
+                            if (confirmDelete) {
+                                seat.innerText = i;
+                                seat.classList.remove("reserved");
+                                seat.onclick = function () {
+                                    let newName = prompt("Ingresa tu nombre para reservar el asiento");
+                                    if (newName) {
+                                        seat.innerText = newName;
+                                        seat.classList.add("reserved");
+                                    }
+                                };
+                            }
+                        };
                     }
                 };
                 busDiv.appendChild(seat);
