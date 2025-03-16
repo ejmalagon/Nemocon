@@ -2,7 +2,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Reserva de Asientos - Viaje a Nemocón</title>
+    <title>Reserva de Asientos - Campaña de predicación</title>
     <script type="module">
         // Importar Firebase versión 9
         import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js";
@@ -120,8 +120,8 @@
     </style>
 </head>
 <body>
-    <h1>Reserva tu asiento para el viaje a Nemocón</h1>
-    <p>Haz clic en un asiento para reservarlo</p>
+    <h1>Reserva tu asiento para el viaje a la campaña de predicación a Nemocón el sábado 3 de mayo. Reuerda que debes llevar tu almuerzo y alimentos que vayas a consumir durante ese día.</h1>
+    <p>Haz clic en un asiento para reservarlo y escribe tu nombre.</p>
     <div id="buses"></div>
     
 
