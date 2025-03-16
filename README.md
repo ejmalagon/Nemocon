@@ -2,7 +2,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Reserva de Asientos - campaña de predicación a Nemocón</title>
+    <title>Reserva de Asientos - Viaje a Nemocón</title>
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-database.js"></script>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -53,6 +55,19 @@
     </div>
 
     <script>
+        const firebaseConfig = {
+            apiKey: "AIzaSyAKP4w62Q3lPQYr30zzGf4rs3iF83uJCuc",
+            authDomain: "buses-32e31.firebaseapp.com",
+            databaseURL: "https://buses-32e31-default-rtdb.firebaseio.com/",
+            projectId: "buses-32e31",
+            storageBucket: "buses-32e31.firebasestorage.app",
+            messagingSenderId: "91461232305",
+            appId: "1:914612323057:web:8dde205f394adcb9845f50"
+            measurementId: "G-GT9Z1BVNFQ"
+        };
+        
+        firebase.initializeApp(firebaseConfig);
+        const db = firebase.database();
         const busesContainer = document.getElementById("buses");
         const busCount = 2; // Número de buses disponibles
         const seatsPerBus = 40;
@@ -68,25 +83,29 @@
                 let seat = document.createElement("div");
                 seat.classList.add("seat");
                 seat.innerText = i;
-                seat.onclick = function () {
-                    let name = prompt("Ingresa tu nombre para reservar el asiento");
-                    if (name) {
-                        seat.innerText = name;
+                
+                db.ref(`bus${busNumber}/seat${i}`).on("value", snapshot => {
+                    let data = snapshot.val();
+                    if (data) {
+                        seat.innerText = data;
                         seat.classList.add("reserved");
-                        seat.onclick = function () {
-                            let confirmDelete = confirm("¿Deseas liberar este asiento?");
-                            if (confirmDelete) {
-                                seat.innerText = i;
-                                seat.classList.remove("reserved");
-                                seat.onclick = function () {
-                                    let newName = prompt("Ingresa tu nombre para reservar el asiento");
-                                    if (newName) {
-                                        seat.innerText = newName;
-                                        seat.classList.add("reserved");
-                                    }
-                                };
-                            }
-                        };
+                    } else {
+                        seat.innerText = i;
+                        seat.classList.remove("reserved");
+                    }
+                });
+                
+                seat.onclick = function () {
+                    if (seat.classList.contains("reserved")) {
+                        let confirmDelete = confirm("¿Deseas liberar este asiento?");
+                        if (confirmDelete) {
+                            db.ref(`bus${busNumber}/seat${i}`).remove();
+                        }
+                    } else {
+                        let name = prompt("Ingresa tu nombre para reservar el asiento");
+                        if (name) {
+                            db.ref(`bus${busNumber}/seat${i}`).set(name);
+                        }
                     }
                 };
                 busDiv.appendChild(seat);
