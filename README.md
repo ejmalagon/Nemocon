@@ -1,79 +1,87 @@
-# mapa-interactivo
-Mapa del territorio de Margaritas
 <!DOCTYPE html>
 <html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mapa Interactivo</title>
-    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-database.js"></script>
+    <title>Reserva de Asientos - Viaje a Nemocón</title>
     <style>
-        body { text-align: center; font-family: Arial, sans-serif; }
-        #mapa-container { position: relative; display: inline-block; }
-        #mapa { width: 90%; max-width: 800px; cursor: pointer; }
-        .marcador {
-            position: absolute;
-            width: 20px; height: 20px;
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+        }
+        .bus {
+            display: inline-block;
+            margin: 20px;
+            padding: 10px;
+            border: 2px solid black;
+        }
+        .seat {
+            width: 40px;
+            height: 40px;
+            margin: 5px;
+            display: inline-block;
+            border: 1px solid gray;
+            text-align: center;
+            line-height: 40px;
+            cursor: pointer;
+            background-color: lightgray;
+        }
+        .reserved {
             background-color: red;
-            border-radius: 50%;
-            transform: translate(-50%, -50%);
+            color: white;
+        }
+        .images {
+            margin-top: 20px;
+        }
+        .images img {
+            width: 300px;
+            margin: 10px;
         }
     </style>
 </head>
 <body>
-    <h2>Mapa Interactivo</h2>
-    <div id="mapa-container">
-        <img id="mapa" src="https://drive.google.com/file/d/1sCLRJPlAJ1-fuoABMRI_eJo5YXJmbnfc/view?usp=drive_link" alt="Mapa Interactivo">
+    <h1>Reserva tu asiento para el viaje a Nemocón</h1>
+    <p>Haz clic en un asiento para reservarlo</p>
+    <div id="buses"></div>
+    
+    <div class="images">
+        <h2>Imágenes de Nemocón</h2>
+        <img src="imagen1.jpg" alt="Nemocón 1">
+        <img src="imagen2.jpg" alt="Nemocón 2">
     </div>
 
     <script>
-        // Configurar Firebase
-       const firebaseConfig = {
-  apiKey: "AIzaSyCpCSFy621DXXmsORl8HffbFvDdaP0Y7XE",
-  authDomain: "mapa-margaritas.firebaseapp.com",
-  databaseURL: "https://mapa-margaritas-default-rtdb.firebaseio.com",
-  projectId: "mapa-margaritas",
-  storageBucket: "mapa-margaritas.firebasestorage.app",
-  messagingSenderId: "474984702533",
-  appId: "1:474984702533:web:7be228872db83b357db92c",
-  measurementId: "G-TVM15DZW7W"
-};
-        firebase.initializeApp(firebaseConfig);
-        const database = firebase.database();
-
-        const mapa = document.getElementById("mapa");
-        const mapaContainer = document.getElementById("mapa-container");
-
-        // Función para agregar marcador
-        function agregarMarcador(x, y) {
-            const marcador = document.createElement("div");
-            marcador.classList.add("marcador");
-            marcador.style.left = `${x * 100}%`;
-            marcador.style.top = `${y * 100}%`;
-            mapaContainer.appendChild(marcador);
+        const busesContainer = document.getElementById("buses");
+        const busCount = 2; // Número de buses disponibles
+        const seatsPerBus = 40;
+        
+        function createBus(busNumber) {
+            let busDiv = document.createElement("div");
+            busDiv.classList.add("bus");
+            let title = document.createElement("h3");
+            title.innerText = `Bus ${busNumber}`;
+            busDiv.appendChild(title);
+            
+            for (let i = 1; i <= seatsPerBus; i++) {
+                let seat = document.createElement("div");
+                seat.classList.add("seat");
+                seat.innerText = i;
+                seat.onclick = function () {
+                    let name = prompt("Ingresa tu nombre para reservar el asiento");
+                    if (name) {
+                        seat.innerText = name;
+                        seat.classList.add("reserved");
+                        seat.onclick = null; // Evita cambios posteriores
+                    }
+                };
+                busDiv.appendChild(seat);
+            }
+            busesContainer.appendChild(busDiv);
         }
-
-        // Cargar marcadores desde Firebase
-        function cargarMarcadores() {
-            database.ref("marcadores").on("value", snapshot => {
-                mapaContainer.querySelectorAll(".marcador").forEach(m => m.remove());
-                snapshot.forEach(child => {
-                    const { x, y } = child.val();
-                    agregarMarcador(x, y);
-                });
-            });
+        
+        for (let i = 1; i <= busCount; i++) {
+            createBus(i);
         }
-
-        // Evento de clic en el mapa
-        mapa.addEventListener("click", event => {
-            const rect = mapa.getBoundingClientRect();
-            const x = (event.clientX - rect.left) / rect.width;
-            const y = (event.clientY - rect.top) / rect.height;
-            database.ref("marcadores").push({ x, y });
-        });
-
-        cargarMarcadores();
     </script>
 </body>
 </html>
