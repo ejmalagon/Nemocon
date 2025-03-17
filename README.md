@@ -2,21 +2,21 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Reserva de Asientos - Campaña de predicación a Nemocón</title>
+    <title>Reserva de Asientos - Asamblea 20 de abril</title>
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js";
         import { getDatabase, ref, onValue, set } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-database.js";
 
-const firebaseConfig = {
-  apiKey: "AIzaSyAKP4w62Q3lPQYr30zzGf4rs3iF83uJCuc",
-  authDomain: "buses-32e31.firebaseapp.com",
-  databaseURL: "https://buses-32e31-default-rtdb.firebaseio.com",
-  projectId: "buses-32e31",
-  storageBucket: "buses-32e31.firebasestorage.app",
-  messagingSenderId: "914612323057",
-  appId: "1:914612323057:web:8dde205f394adcb9845f50",
-  measurementId: "G-GT9Z1BVNFQ"
-};
+        const firebaseConfig = {
+            apiKey: "AIzaSyAKP4w62Q3lPQYr30zzGf4rs3iF83uJCuc",
+            authDomain: "buses-32e31.firebaseapp.com",
+            databaseURL: "https://buses-32e31-default-rtdb.firebaseio.com",
+            projectId: "buses-32e31",
+            storageBucket: "buses-32e31.firebasestorage.app",
+            messagingSenderId: "914612323057",
+            appId: "1:914612323057:web:8dde205f394adcb9845f50",
+            measurementId: "G-GT9Z1BVNFQ"
+        };
 
         const app = initializeApp(firebaseConfig);
         const db = getDatabase(app);
@@ -42,20 +42,23 @@ const firebaseConfig = {
                     onValue(seatRef, snapshot => {
                         let data = snapshot.val();
                         if (data) {
-                            seat.innerText = data;
-                            seat.classList.add("reserved");
+                            seat.innerText = data.name;
+                            seat.classList.add(data.paid ? "paid" : "reserved");
                         } else {
                             seat.innerText = i;
-                            seat.classList.remove("reserved");
+                            seat.classList.remove("reserved", "paid");
                         }
                     });
                     
                     seat.onclick = function () {
+                        const seatData = seat.classList.contains("reserved") ? { paid: !seat.classList.contains("paid") } : null;
                         if (!seat.classList.contains("reserved")) {
                             let name = prompt("Ingresa tu nombre para reservar el asiento");
                             if (name) {
-                                set(seatRef, name);
+                                set(seatRef, { name, paid: false });
                             }
+                        } else if (confirm("¿Quieres marcar este asiento como pagado?")) {
+                            set(seatRef, { name: seat.innerText, paid: seatData.paid });
                         }
                     };
                     busDiv.appendChild(seat);
@@ -97,11 +100,15 @@ const firebaseConfig = {
             background-color: red;
             color: white;
         }
+        .paid {
+            background-color: green;
+            color: white;
+        }
     </style>
 </head>
 <body>
-    <h1>Reserva tu asiento para la campaña de predicación en Nemocón</h1>
-    <p>La campaña se realizará el sábado 3 de mayo. Haz clic en un asiento para reservarlo.</p>
+    <h1>Reserva tu asiento para la asamblea del 20 de abril.</h1>
+    <p>Haz clic en un asiento para reservarlo. Los asientos se marcaran con color verde cuando hayas realizado el pago del transporte.</p>
     <div id="buses"></div>
 </body>
 </html>
