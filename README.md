@@ -1,10 +1,8 @@
-<!DOCTYPE html>
 <html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Reserva de Asientos - Campaña de predicación a Nemocón</title>
-    <title>Sábado 3 de mayo</title>
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js";
         import { getDatabase, ref, onValue, set } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-database.js";
@@ -102,8 +100,8 @@ const firebaseConfig = {
     </style>
 </head>
 <body>
-    <h1>Reserva tu asiento para la campaña a Nemocón</h1>
-    <p>La campaña se realizará el sábado 3 de mayo, recuerda que debes llevar los alimentos que vas a consumir. Haz clic en un asiento para reservarlo.</p>
+    <h1>Reserva tu asiento para la campaña de predicación en Nemocón</h1>
+    <p>La campaña se realizará el sábado 3 de mayo. Haz clic en un asiento para reservarlo.</p>
     <div id="buses"></div>
 </body>
 </html>
