@@ -20,6 +20,7 @@
 
         const app = initializeApp(firebaseConfig);
         const db = getDatabase(app);
+        const adminPassword = "33951"; // Cambia esto por tu clave secreta
 
         document.addEventListener("DOMContentLoaded", () => {
             const busesContainer = document.getElementById("buses");
@@ -51,14 +52,18 @@
                     });
                     
                     seat.onclick = function () {
-                        const seatData = seat.classList.contains("reserved") ? { paid: !seat.classList.contains("paid") } : null;
                         if (!seat.classList.contains("reserved")) {
                             let name = prompt("Ingresa tu nombre para reservar el asiento");
                             if (name) {
                                 set(seatRef, { name, paid: false });
                             }
                         } else if (confirm("¿Quieres marcar este asiento como pagado?")) {
-                            set(seatRef, { name: seat.innerText, paid: seatData.paid });
+                            let password = prompt("Ingresa la clave de administrador");
+                            if (password === adminPassword) {
+                                set(seatRef, { name: seat.innerText, paid: !seat.classList.contains("paid") });
+                            } else {
+                                alert("Clave incorrecta. No tienes permiso para marcar como pagado.");
+                            }
                         }
                     };
                     busDiv.appendChild(seat);
@@ -107,8 +112,8 @@
     </style>
 </head>
 <body>
-    <h1>Reserva tu asiento para la asamblea del 20 de abril.</h1>
-    <p>Haz clic en un asiento para reservarlo. Los asientos se marcaran con color verde cuando hayas realizado el pago del transporte.</p>
+    <h1>Transporte asamblea del 20 de abril</h1>
+    <p>Haz clic en un asiento para reservarlo. Cuando realices el pago del transporte se marcará con color verde, el plazo máximo para reservr y pagar el puesto es el 13 de abril.</p>
     <div id="buses"></div>
 </body>
 </html>
