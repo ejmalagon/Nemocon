@@ -113,7 +113,7 @@
 </head>
 <body>
     <h1>Transporte asamblea del 20 de abril</h1>
-    <p>Haz clic en un asiento para reservarlo. Cuando realices el pago del transporte se marcará con color verde, el plazo máximo para reservr y pagar el puesto es el 13 de abril.</p>
+    <p>Haz clic en un asiento para reservarlo. Cuando realices el pago del transporte se marcará con color verde, el plazo máximo para reservar y pagar el puesto es el 13 de abril.</p>
     <div id="buses"></div>
 </body>
 </html>
